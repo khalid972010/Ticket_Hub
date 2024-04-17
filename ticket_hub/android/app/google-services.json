@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "121766139808",
+    "project_id": "ticket-hub-b9258",
+    "storage_bucket": "ticket-hub-b9258.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121766139808:android:c8b2d446cc93e209a476c5",
+        "android_client_info": {
+          "package_name": "com.example.ticket_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjoGJNCWpQNvESGZFrPgl9fCC2CZRlVxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ticket_hub/firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Add a user to Firestore
+  addUser(User(name: 'John', age: 30));
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -121,5 +132,30 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+void addUser(User user) async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  try {
+    await firestore.collection('users').add(user.toMap());
+    print('User added successfully!');
+  } catch (e) {
+    print('Error adding user: $e');
+  }
+}
+
+class User {
+  final String name;
+  final int age;
+
+  User({required this.name, required this.age});
+
+  // Convert user data to a Map for storing in Firestore
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'age': age,
+    };
   }
 }
