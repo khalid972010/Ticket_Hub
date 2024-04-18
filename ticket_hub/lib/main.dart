@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_hub/firebase_options.dart';
+import 'package:ticket_hub/screens/on_boarding/on_boarding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,46 +10,53 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Add a user to Firestore
-  addUser(User(name: 'John', age: 30));
+  //! Firebase Check
+  print(await fetchFirstName());
 
-  runApp(Home());
+  runApp(const MyApp());
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Text("Hello"),
+        body: Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage("assets/images/main_background_light.png"),
+              fit: BoxFit.cover,
+            )),
+            child: OnboardingScreen()),
       ),
     );
   }
 }
 
-void addUser(User user) async {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+//! Firebase Check
+Future<String> fetchFirstName() async {
   try {
-    await firestore.collection('users').add(user.toMap());
-    print('User added successfully!');
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('users').limit(1).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Get the first document data
+      Map<String, dynamic> userData =
+          querySnapshot.docs.first.data() as Map<String, dynamic>;
+
+      // Extract the name from the user data
+      String name = userData['name'] ??
+          ''; // If 'name' field doesn't exist or is null, return an empty string
+
+      return name;
+    } else {
+      return ''; // Returning an empty string if no users are found
+    }
   } catch (e) {
-    print('Error adding user: $e');
-  }
-}
-
-class User {
-  final String name;
-  final int age;
-
-  User({required this.name, required this.age});
-
-  // Convert user data to a Map for storing in Firestore
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'age': age,
-    };
+    print('Error fetching first user: $e');
+    return ''; // Returning an empty string in case of error
   }
 }
