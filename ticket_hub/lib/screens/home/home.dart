@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ticket_hub/constants.dart';
 import 'package:ticket_hub/helpers/colors_helper.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 1000,
-      color: Colors.white,
+      color: Colors.grey.shade200,
       child: Column(
         children: [
           SizedBox(
@@ -21,11 +22,11 @@ class HomeScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.35,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  image: const AssetImage("assets/images/light_background.png"),
+                  image: AssetImage(Statics.background()),
                 ),
                 const Positioned(
-                  top: 120, // Adjust as needed
-                  left: 16, // Adjust as needed
+                  top: 120,
+                  left: 16,
                   child: Text(
                     'Welcome back,',
                     style: TextStyle(
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                Positioned(
+                const Positioned(
                   top: 150, // Adjust as needed
                   left: 16, // Adjust as needed
                   child: Text(
