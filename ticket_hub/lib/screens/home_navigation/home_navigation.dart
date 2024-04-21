@@ -32,9 +32,9 @@ class HomeNavigation extends StatelessWidget {
               bottomNavigationBar: CurvedNavigationBar(
                 onTap: (index) => navigationCubit.navigateBar(index),
                 backgroundColor: navigationCubit.index == 0
-                    ? Colors.white
+                    ? Colors.grey.shade200
                     : Colors.transparent,
-                color: Colors.grey.shade300,
+                color: Colors.white,
                 animationDuration: const Duration(milliseconds: 200),
                 items: const [
                   Icon(
