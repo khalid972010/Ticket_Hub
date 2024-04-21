@@ -28,26 +28,13 @@ class HomeNavigation extends StatelessWidget {
                 BlocProvider.of<NavigationCubit>(context);
             return Scaffold(
               backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                centerTitle: true,
-                title: Text(
-                  navigationCubit.screenNames[navigationCubit.index],
-                  //style: GoogleFonts.poppins(fontSize: 20.sp),
-                ),
-              ),
-              body: Column(
-                children: [
-                  Expanded(
-                    child: navigationCubit.screens[navigationCubit.index],
-                  ),
-                ],
-              ),
+              body: navigationCubit.screens[navigationCubit.index],
               bottomNavigationBar: CurvedNavigationBar(
                 onTap: (index) => navigationCubit.navigateBar(index),
-                backgroundColor: Colors.transparent,
-                color: Colors.white,
+                backgroundColor: navigationCubit.index == 0
+                    ? Colors.white
+                    : Colors.transparent,
+                color: Colors.grey.shade300,
                 animationDuration: const Duration(milliseconds: 200),
                 items: const [
                   Icon(
