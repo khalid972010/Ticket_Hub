@@ -21,8 +21,7 @@ class HomeScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.35,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  image: const AssetImage(
-                      "assets/images/main_background_light.png"),
+                  image: const AssetImage("assets/images/light_background.png"),
                 ),
                 const Positioned(
                   top: 120, // Adjust as needed
