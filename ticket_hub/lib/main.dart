@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomeNavigation(),
+      home: OnboardingScreen(),
     );
   }
 }

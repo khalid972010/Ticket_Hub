@@ -11,20 +11,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> _onboardingData = [
     {
-      'title': 'Welcome to Flutter Onboarding',
-      'description': 'This is a simple onboarding screen built with Flutter.',
+      'title': 'Welcome to Tickets Hub',
+      'description': 'Where you can book tickets easily!',
       'image': 'assets/images/vector3.png',
     },
     {
-      'title': 'Beautiful UI',
-      'description': 'Flutter allows you to create stunning user interfaces.',
-      'image': 'assets/images/vector5.png',
+      'title': 'Simple and easy',
+      'description': 'Book your favourite match or concert in seconds!',
+      'image': 'assets/images/onboard_2.png',
     },
     {
-      'title': 'Cross-platform',
-      'description':
-          'Write code once, deploy on both iOS and Android platforms.',
-      'image': 'assets/images/vector6.png',
+      'title': 'Ready to join us?',
+      'description': '',
+      'image': 'assets/images/onboard_3.png',
     },
   ];
 
@@ -33,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/dark_background.png"),
+          image: AssetImage("assets/images/light_background.png"),
           fit: BoxFit.cover,
         ),
       ),
@@ -127,24 +126,27 @@ class OnboardingPage extends StatelessWidget {
         children: [
           Image.asset(
             image,
-            height: 200.0,
+            height: MediaQuery.of(context).size.height / 2,
+            width: MediaQuery.of(context).size.width,
           ),
           const SizedBox(height: 24.0),
           Text(
             title,
             style: const TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 28.0,
+                fontFamily: 'Poppins-M',
+                decoration: TextDecoration.none,
+                color: Colors.black),
           ),
           const SizedBox(height: 12.0),
           Text(
             description,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 16.0,
-              color: Colors.grey,
-            ),
+                fontSize: 16.0,
+                fontFamily: 'Poppins-M',
+                decoration: TextDecoration.none,
+                color: Colors.black),
           ),
           const SizedBox(height: 24.0),
         ],
