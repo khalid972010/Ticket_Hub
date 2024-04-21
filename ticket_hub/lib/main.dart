@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_hub/firebase_options.dart';
 import 'package:ticket_hub/helpers/colors_helper.dart';
 import 'package:ticket_hub/screens/home/home.dart';
+import 'package:ticket_hub/screens/home_navigation/home_navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
               image: AssetImage("assets/images/main_background_light.png"),
               fit: BoxFit.cover,
             )),
-            child: HomeScreen()),
+            child: HomeNavigation()),
       ),
     );
   }
