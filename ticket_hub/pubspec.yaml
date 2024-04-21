@@ -37,6 +37,8 @@ dependencies:
   firebase_core: ^2.24.2
   cloud_firestore: ^4.14.0
   onboarding: ^4.0.2
+  curved_navigation_bar: ^1.0.3
+  flutter_bloc: ^8.1.5
 
 dev_dependencies:
   flutter_test:
