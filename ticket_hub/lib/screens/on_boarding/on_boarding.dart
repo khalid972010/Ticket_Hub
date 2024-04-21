@@ -30,47 +30,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        PageView.builder(
-          controller: _pageController,
-          itemCount: _onboardingData.length,
-          onPageChanged: (int page) {
-            setState(() {
-              _currentPage = page;
-            });
-          },
-          itemBuilder: (context, index) {
-            return OnboardingPage(
-              title: _onboardingData[index]['title']!,
-              description: _onboardingData[index]['description']!,
-              image: _onboardingData[index]['image']!,
-            );
-          },
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/dark_background.png"),
+          fit: BoxFit.cover,
         ),
-        Positioned(
-          bottom: 40.0,
-          left: 0.0,
-          right: 0.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildPageIndicator(),
+      ),
+      child: Stack(
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            itemCount: _onboardingData.length,
+            onPageChanged: (int page) {
+              setState(() {
+                _currentPage = page;
+              });
+            },
+            itemBuilder: (context, index) {
+              return OnboardingPage(
+                title: _onboardingData[index]['title']!,
+                description: _onboardingData[index]['description']!,
+                image: _onboardingData[index]['image']!,
+              );
+            },
           ),
-        ),
-        Positioned(
-          bottom: 24.0,
-          right: 16.0,
-          child: Visibility(
-            visible: _currentPage == _onboardingData.length - 1,
-            child: ElevatedButton(
-              onPressed: () {
-                // Navigate to the next screen or perform any desired action
-              },
-              child: const Text('Get Started'),
+          Positioned(
+            bottom: 40.0,
+            left: 0.0,
+            right: 0.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: _buildPageIndicator(),
             ),
           ),
-        ),
-      ],
+          Positioned(
+            bottom: 24.0,
+            right: 16.0,
+            child: Visibility(
+              visible: _currentPage == _onboardingData.length - 1,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to the next screen or perform any desired action
+                },
+                child: const Text('Get Started'),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -117,6 +125,10 @@ class OnboardingPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Image.asset(
+            image,
+            height: 200.0,
+          ),
           const SizedBox(height: 24.0),
           Text(
             title,
@@ -135,10 +147,6 @@ class OnboardingPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24.0),
-          Image.asset(
-            image,
-            height: 200.0,
-          ),
         ],
       ),
     );
