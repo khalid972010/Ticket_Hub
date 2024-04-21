@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:ticket_hub/screens/favorites/favorites.dart';
 import 'package:ticket_hub/screens/home/home.dart';
 import 'package:ticket_hub/screens/my_tickets/my_tickets.dart';
