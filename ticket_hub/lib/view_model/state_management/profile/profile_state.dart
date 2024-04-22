@@ -4,6 +4,8 @@ abstract class ProfileState {}
 
 class ProfileInitial extends ProfileState {}
 
+class ProfileFetched extends ProfileState {}
+
 class ImageChanged extends ProfileState {}
 
 class UpdateSuccess extends ProfileState {
