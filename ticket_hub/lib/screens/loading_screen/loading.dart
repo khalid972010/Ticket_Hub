@@ -26,11 +26,11 @@ class _LoadingScreenState extends State<LoadingScreen>
       }
     });
 
-    Timer(Duration(seconds: 7), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
-      );
-    });
+    // Timer(Duration(seconds: 7), () {
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => OnboardingScreen()),
+    //   );
+    // });
   }
 
   @override
