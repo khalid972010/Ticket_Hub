@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_hub/firebase_options.dart';
 import 'package:ticket_hub/helpers/colors_helper.dart';
+import 'package:ticket_hub/screens/home/home.dart';
+import 'package:ticket_hub/screens/home_navigation/home_navigation.dart';
 import 'package:ticket_hub/screens/loading_screen/loading.dart';
 import 'package:ticket_hub/screens/on_boarding/on_boarding.dart';
 

@@ -110,9 +110,14 @@ class EventCardComponent extends StatelessWidget {
                         size: 30,
                         color: Colors.purple,
                       ),
-                      Text(
-                        eventCard.location,
-                        overflow: TextOverflow.ellipsis,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Text(
+                          eventCard.location,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w400),
+                        ),
                       ),
                     ],
                   )),
