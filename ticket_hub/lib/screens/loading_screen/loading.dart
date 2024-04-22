@@ -11,8 +11,8 @@ class LoadingScreen extends StatefulWidget {
   _LoadingScreenState createState() => _LoadingScreenState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen> with TickerProviderStateMixin {
-
+class _LoadingScreenState extends State<LoadingScreen>
+    with TickerProviderStateMixin {
   late GifController _controller;
 
   @override
@@ -33,14 +33,14 @@ class _LoadingScreenState extends State<LoadingScreen> with TickerProviderStateM
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Container(
+      body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/light_background.png"), // Background image
+            image: AssetImage(
+                "assets/images/light_background.png"), // Background image
             fit: BoxFit.cover,
           ),
         ),
@@ -53,16 +53,16 @@ class _LoadingScreenState extends State<LoadingScreen> with TickerProviderStateM
                 controller: _controller,
                 autostart: Autostart.once,
                 placeholder: (context) => const Text('Loading...'),
-                  onFetchCompleted: () {
-                    _controller.reset();
-                    _controller.forward();
-                  },
+                onFetchCompleted: () {
+                  _controller.reset();
+                  _controller.forward();
+                },
               ),
               SizedBox(height: 16),
-              Text(
-                'Loading...',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+              // Text(
+              //   'Loading...',
+              //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              // ),
             ],
           ),
         ),
