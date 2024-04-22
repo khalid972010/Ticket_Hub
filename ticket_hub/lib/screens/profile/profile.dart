@@ -101,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               child: IconButton(
                                 iconSize:
-                                    MediaQuery.of(context).size.height / 18,
+                                    MediaQuery.of(context).size.width / 18,
                                 icon: const Icon(Icons.edit),
                                 onPressed: () async {
                                   final imageFile =
