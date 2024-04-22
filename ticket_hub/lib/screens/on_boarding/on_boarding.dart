@@ -11,66 +11,73 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> _onboardingData = [
     {
-      'title': 'Welcome to Flutter Onboarding',
-      'description': 'This is a simple onboarding screen built with Flutter.',
+      'title': 'Welcome to Tickets Hub',
+      'description': 'Where you can book tickets easily!',
       'image': 'assets/images/vector3.png',
     },
     {
-      'title': 'Beautiful UI',
-      'description': 'Flutter allows you to create stunning user interfaces.',
-      'image': 'assets/images/vector5.png',
+      'title': 'Simple and easy',
+      'description': 'Book your favourite match or concert in seconds!',
+      'image': 'assets/images/onboard_2.png',
     },
     {
-      'title': 'Cross-platform',
-      'description':
-          'Write code once, deploy on both iOS and Android platforms.',
-      'image': 'assets/images/vector6.png',
+      'title': 'Ready to join us?',
+      'description': '',
+      'image': 'assets/images/onboard_3.png',
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        PageView.builder(
-          controller: _pageController,
-          itemCount: _onboardingData.length,
-          onPageChanged: (int page) {
-            setState(() {
-              _currentPage = page;
-            });
-          },
-          itemBuilder: (context, index) {
-            return OnboardingPage(
-              title: _onboardingData[index]['title']!,
-              description: _onboardingData[index]['description']!,
-              image: _onboardingData[index]['image']!,
-            );
-          },
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/light_background.png"),
+          fit: BoxFit.cover,
         ),
-        Positioned(
-          bottom: 40.0,
-          left: 0.0,
-          right: 0.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildPageIndicator(),
+      ),
+      child: Stack(
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            itemCount: _onboardingData.length,
+            onPageChanged: (int page) {
+              setState(() {
+                _currentPage = page;
+              });
+            },
+            itemBuilder: (context, index) {
+              return OnboardingPage(
+                title: _onboardingData[index]['title']!,
+                description: _onboardingData[index]['description']!,
+                image: _onboardingData[index]['image']!,
+              );
+            },
           ),
-        ),
-        Positioned(
-          bottom: 24.0,
-          right: 16.0,
-          child: Visibility(
-            visible: _currentPage == _onboardingData.length - 1,
-            child: ElevatedButton(
-              onPressed: () {
-                // Navigate to the next screen or perform any desired action
-              },
-              child: const Text('Get Started'),
+          Positioned(
+            bottom: 40.0,
+            left: 0.0,
+            right: 0.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: _buildPageIndicator(),
             ),
           ),
-        ),
-      ],
+          Positioned(
+            bottom: 24.0,
+            right: 16.0,
+            child: Visibility(
+              visible: _currentPage == _onboardingData.length - 1,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to the next screen or perform any desired action
+                },
+                child: const Text('Get Started'),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -117,28 +124,31 @@ class OnboardingPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Image.asset(
+            image,
+            height: MediaQuery.of(context).size.height / 2,
+            width: MediaQuery.of(context).size.width,
+          ),
           const SizedBox(height: 24.0),
           Text(
             title,
             style: const TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 28.0,
+                fontFamily: 'Poppins-M',
+                decoration: TextDecoration.none,
+                color: Colors.black),
           ),
           const SizedBox(height: 12.0),
           Text(
             description,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 16.0,
-              color: Colors.grey,
-            ),
+                fontSize: 16.0,
+                fontFamily: 'Poppins-M',
+                decoration: TextDecoration.none,
+                color: Colors.black),
           ),
           const SizedBox(height: 24.0),
-          Image.asset(
-            image,
-            height: 200.0,
-          ),
         ],
       ),
     );
