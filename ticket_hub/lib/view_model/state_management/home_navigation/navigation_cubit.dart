@@ -18,10 +18,10 @@ class NavigationCubit extends Cubit<NavigationState> {
     'Profile',
   ];
 
-  List screens = const [
-    HomeScreen(),
-    MyTicketsScreen(),
-    FavoritesScreen(),
+  List screens = [
+    const HomeScreen(),
+    const MyTicketsScreen(),
+    const FavoritesScreen(),
     ProfileScreen(),
   ];
 
