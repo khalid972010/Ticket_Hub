@@ -1,10 +1,11 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ticket_hub/models/category_card_model.dart';
 
 class categoryCardComponent extends StatelessWidget {
-  const categoryCardComponent({super.key});
+  const categoryCardComponent({super.key, required this.categoryModel});
+  final CategoryCardModel categoryModel;
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +25,15 @@ class categoryCardComponent extends StatelessWidget {
         child: Container(
           width: 120,
           height: 60,
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                EvaIcons.bulbOutline,
+                categoryModel.categoryIcon,
                 color: Colors.purple,
               ),
-              SizedBox(width: 8),
-              Text("salah"),
+              const SizedBox(width: 8),
+              Text(categoryModel.categoryName),
             ],
           ),
         ),
