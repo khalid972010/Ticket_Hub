@@ -1,49 +1,32 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ticket_hub/view_model/state_management/profile/profile_cubit.dart';
 
 import '../../components/profile_textFormField_component.dart';
-import '../../helpers/user_fun.dart';
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({Key? key});
+  const ProfileScreen({Key? key}) : super(key: key);
 
-  String userID = "77lCDGrRn0Ag8VYibouu";
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, dynamic>?>(
-      future: UserFun.fetchUserData(userID),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Center(
-              child: Text('Error: ${snapshot.error}'),
-            ),
-          );
-        } else if (snapshot.hasData) {
-          Map<String, dynamic>? userData = snapshot.data;
-          TextEditingController fullNameController =
-              TextEditingController(text: userData?['fullName'] ?? '');
-          TextEditingController genderController =
-              TextEditingController(text: userData?['gender'] ?? '');
-          TextEditingController ageController =
-              TextEditingController(text: userData?['age']?.toString() ?? '');
-          TextEditingController emailController =
-              TextEditingController(text: userData?['email'] ?? '');
-          TextEditingController phoneNumberController =
-              TextEditingController(text: userData?['phoneNumber'] ?? '');
-          TextEditingController userNameController =
-              TextEditingController(text: userData?['userName'] ?? '');
-          String imgUrl = userData?['profilePicture'] ?? '';
-
+    return BlocProvider(
+      create: (context) =>
+          ProfileCubit("77lCDGrRn0Ag8VYibouu")..fetchUserData(),
+      child: BlocConsumer<ProfileCubit, ProfileState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          final profileCubit = BlocProvider.of<ProfileCubit>(context);
+          final profileData = profileCubit.profileData;
+          if (state is ProfileInitial) {
+            return const Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
           return Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -60,16 +43,17 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   child: TextButton(
                     onPressed: () async {
-                      Map<String, dynamic> updatedUserData = {
-                        'fullName': fullNameController.text,
-                        'gender': genderController.text,
-                        'age': int.tryParse(ageController.text) ?? 0,
-                        'email': emailController.text,
-                        'phoneNumber': phoneNumberController.text,
-                        'userName': userNameController.text,
-                        'profilePicture': imgUrl
+                      final updatedUserData = {
+                        'fullName': profileData[0]['controller'].text,
+                        'gender': profileData[4]['controller'].text,
+                        'age': profileData[5]['controller'].text,
+                        'email': profileData[2]['controller'].text,
+                        'phoneNumber': profileData[3]['controller'].text,
+                        'userName': profileData[1]['controller'].text,
+                        'profilePicture': profileData[6]['controller'],
                       };
-                      await UserFun.updateUserData(userID, updatedUserData);
+                      profileCubit.updateUserData(
+                          "77lCDGrRn0Ag8VYibouu", updatedUserData);
                     },
                     child: const Text(
                       "Save",
@@ -99,7 +83,8 @@ class ProfileScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: NetworkImage(imgUrl),
+                                image:
+                                    NetworkImage(profileData[6]['controller']),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -119,19 +104,17 @@ class ProfileScreen extends StatelessWidget {
                                     MediaQuery.of(context).size.width / 18,
                                 icon: const Icon(Icons.edit),
                                 onPressed: () async {
-                                  File? imageFile = await UserFun.pickImage(
+                                  final imageFile =
+                                      await profileCubit.pickImage(
                                     fromCamera: false,
                                     fromGallery: true,
                                   );
                                   if (imageFile != null) {
-                                    String? imgUploaded =
-                                        await UserFun.uploadToStorage(
-                                            imageFile);
-                                    print(
-                                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%:");
-                                    print(imgUploaded);
+                                    final imgUploaded = await profileCubit
+                                        .uploadToStorage(imageFile);
                                     if (imgUploaded != null) {
-                                      imgUrl = imgUploaded;
+                                      profileData[6]['controller'] =
+                                          imgUploaded;
                                     }
                                   }
                                 },
@@ -141,52 +124,44 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 400,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 400),
                     Text(
-                      userData?['fullName'] ?? '',
-                      style: const TextStyle(fontSize: 28),
+                      profileData[0]['controller'].text,
+                      style: const TextStyle(
+                        fontSize: 28,
+                      ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 1000,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 1000),
                     Text(
-                      userData?['userName'] ?? '',
+                      profileData[1]['controller'].text,
                       style: const TextStyle(
                         fontSize: 15,
                         color: Colors.grey,
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 120,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
                     const Divider(
                       color: Colors.deepPurple,
                       indent: 20,
                       endIndent: 20,
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 120,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
                     CustomTextFormField(
-                      controller: fullNameController,
+                      controller: profileData[0]['controller'],
                       height: 0.08,
                       width: 0.9,
                       hintText: 'Full name',
                       label: 'Full name',
                       paddingSymmetric: 20.0,
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 50,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 50),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomTextFormField(
-                            controller: genderController,
+                            controller: profileData[4]['controller'],
                             height: 0.08,
                             width: 0.43,
                             hintText: 'Gender',
@@ -194,7 +169,7 @@ class ProfileScreen extends StatelessWidget {
                             paddingSymmetric: 20.0,
                           ),
                           CustomTextFormField(
-                            controller: ageController,
+                            controller: profileData[5]['controller'],
                             height: 0.08,
                             width: 0.43,
                             hintText: 'Age',
@@ -204,33 +179,27 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 50,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 50),
                     CustomTextFormField(
-                      controller: emailController,
+                      controller: profileData[2]['controller'],
                       height: 0.08,
                       width: 0.9,
                       hintText: 'Email',
                       label: 'Email',
                       paddingSymmetric: 20.0,
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 50,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 50),
                     CustomTextFormField(
-                      controller: phoneNumberController,
+                      controller: profileData[3]['controller'],
                       height: 0.08,
                       width: 0.9,
                       hintText: 'Phone number',
                       label: 'Phone number',
                       paddingSymmetric: 20.0,
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 50,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 50),
                     CustomTextFormField(
-                      controller: userNameController,
+                      controller: profileData[1]['controller'],
                       height: 0.08,
                       width: 0.9,
                       hintText: 'User name',
@@ -242,14 +211,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           );
-        } else {
-          return Scaffold(
-            body: Center(
-              child: Text('No data available'),
-            ),
-          );
-        }
-      },
+        },
+      ),
     );
   }
 }
