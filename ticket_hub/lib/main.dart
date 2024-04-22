@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_hub/firebase_options.dart';
 import 'package:ticket_hub/helpers/colors_helper.dart';
+import 'package:ticket_hub/screens/home_navigation/home_navigation.dart';
 import 'package:ticket_hub/screens/loading_screen/loading.dart';
 
 void main() async {
@@ -19,16 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        fontFamily: 'Poppins-M',
-        primarySwatch: ColorsHelpers.createMaterialColor(
-          const Color.fromARGB(255, 107, 96, 209),
+        theme: ThemeData(
+          fontFamily: 'Poppins-M',
+          primarySwatch: ColorsHelpers.createMaterialColor(
+            const Color.fromARGB(255, 107, 96, 209),
+          ),
         ),
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: LoadingScreen(),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        home: const HomeNavigation());
   }
 }
