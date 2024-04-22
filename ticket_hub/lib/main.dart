@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:onboarding/onboarding.dart';
-import 'package:ticket_hub/components/event_card_components.dart';
 import 'package:ticket_hub/firebase_options.dart';
 import 'package:ticket_hub/helpers/colors_helper.dart';
 import 'package:ticket_hub/screens/loading_screen/loading.dart';
