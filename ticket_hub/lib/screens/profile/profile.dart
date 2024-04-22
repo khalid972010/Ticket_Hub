@@ -79,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           Container(
                             width: MediaQuery.of(context).size.width / 3,
-                            height: MediaQuery.of(context).size.height / 6,
+                            height: MediaQuery.of(context).size.width / 3,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
@@ -148,7 +148,6 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(height: MediaQuery.of(context).size.height / 120),
                     CustomTextFormField(
                       controller: profileData[0]['controller'],
-                      height: 0.08,
                       width: 0.9,
                       hintText: 'Full name',
                       label: 'Full name',
@@ -162,7 +161,6 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           CustomTextFormField(
                             controller: profileData[4]['controller'],
-                            height: 0.08,
                             width: 0.43,
                             hintText: 'Gender',
                             label: 'Gender',
@@ -170,7 +168,6 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           CustomTextFormField(
                             controller: profileData[5]['controller'],
-                            height: 0.08,
                             width: 0.43,
                             hintText: 'Age',
                             label: 'Age',
@@ -182,7 +179,6 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(height: MediaQuery.of(context).size.height / 50),
                     CustomTextFormField(
                       controller: profileData[2]['controller'],
-                      height: 0.08,
                       width: 0.9,
                       hintText: 'Email',
                       label: 'Email',
@@ -191,7 +187,6 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(height: MediaQuery.of(context).size.height / 50),
                     CustomTextFormField(
                       controller: profileData[3]['controller'],
-                      height: 0.08,
                       width: 0.9,
                       hintText: 'Phone number',
                       label: 'Phone number',
@@ -200,7 +195,6 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(height: MediaQuery.of(context).size.height / 50),
                     CustomTextFormField(
                       controller: profileData[1]['controller'],
-                      height: 0.08,
                       width: 0.9,
                       hintText: 'User name',
                       label: 'User name',
