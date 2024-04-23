@@ -4,7 +4,6 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     Key? key,
     required this.width,
-    required this.height,
     required this.paddingSymmetric,
     required this.hintText,
     required this.label,
@@ -12,7 +11,6 @@ class CustomTextFormField extends StatelessWidget {
   }) : super(key: key);
 
   final double width;
-  final double height;
   final double paddingSymmetric;
   final String hintText;
   final String label;
@@ -22,7 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * width,
-      height: MediaQuery.of(context).size.height * height + 1,
+      height: 65,
       padding: EdgeInsets.symmetric(horizontal: paddingSymmetric),
       decoration: BoxDecoration(
         color: Colors.white,

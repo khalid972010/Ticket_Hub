@@ -1,6 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ticket_hub/components/category_list_builder.dart';
+import 'package:ticket_hub/components/event_list_builder.dart';
 import 'package:ticket_hub/constants.dart';
 import 'package:ticket_hub/helpers/colors_helper.dart';
 
@@ -100,6 +103,12 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+          //---------------------------
+          const CategoryListBuilder(),
+          const SizedBox(
+            height: 20,
+          ),
+          const EventListBuilder(),
         ],
       ),
     );
