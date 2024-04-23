@@ -7,30 +7,20 @@ import '../on_boarding/on_boarding.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
+
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen>
-    with TickerProviderStateMixin {
-  late GifController _controller;
-
+class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = GifController(vsync: this);
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.reset();
-        _controller.forward();
-      }
+    Timer(Duration(seconds: 7), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+      );
     });
-
-    // Timer(Duration(seconds: 7), () {
-    //   Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(builder: (context) => OnboardingScreen()),
-    //   );
-    // });
   }
 
   @override
@@ -48,21 +38,7 @@ class _LoadingScreenState extends State<LoadingScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Gif(
-                image: AssetImage("assets/images/animation.gif"),
-                controller: _controller,
-                autostart: Autostart.once,
-                placeholder: (context) => const Text('Loading...'),
-                onFetchCompleted: () {
-                  _controller.reset();
-                  _controller.forward();
-                },
-              ),
-              SizedBox(height: 16),
-              // Text(
-              //   'Loading...',
-              //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              // ),
+              Image.asset("assets/images/animation.gif"),
             ],
           ),
         ),
