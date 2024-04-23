@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class CategoryCardModel {
   final String categoryName;
   final IconData categoryIcon;
+  bool isSelected;
 
-  const CategoryCardModel({
+  CategoryCardModel({
     required this.categoryName,
     required this.categoryIcon,
+    required this.isSelected,
   });
 }

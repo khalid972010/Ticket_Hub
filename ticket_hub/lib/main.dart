@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_hub/firebase_options.dart';
 import 'package:ticket_hub/helpers/colors_helper.dart';
 import 'package:ticket_hub/screens/home/home.dart';
@@ -18,11 +17,11 @@ void main() async {
 }
 
 void initializeHomePage() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  //SharedPreferences prefs = await SharedPreferences.getInstance();
+  // bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
   // Add logic for whether user should go to home (Logged in) or Sign in
 
-  runApp(MyApp(isFirstTime: isFirstTime));
+  runApp(MyApp(isFirstTime: false));
 }
 
 class MyApp extends StatelessWidget {

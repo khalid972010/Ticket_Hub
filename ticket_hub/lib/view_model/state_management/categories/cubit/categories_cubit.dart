@@ -7,22 +7,26 @@ part 'categories_state.dart';
 
 class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesCubit() : super(CategoriesInitial());
-  final List<CategoryCardModel> categoryList = const [
+  final List<CategoryCardModel> categoryList = [
     CategoryCardModel(
       categoryName: "Sports",
       categoryIcon: Icons.sports_soccer_outlined,
+      isSelected: false,
     ),
     CategoryCardModel(
       categoryName: "Music",
       categoryIcon: Icons.music_note_outlined,
+      isSelected: false,
     ),
     CategoryCardModel(
       categoryName: "Nightlife",
       categoryIcon: Icons.nightlife_outlined,
+      isSelected: false,
     ),
     CategoryCardModel(
       categoryName: "Holiday",
       categoryIcon: Icons.beach_access_outlined,
+      isSelected: false,
     ),
   ];
 
@@ -33,6 +37,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       selectedIndex = null;
     } else {
       selectedIndex = index;
+      categoryList[index].isSelected = true;
     }
     emit(CategoriesChangePage());
   }
