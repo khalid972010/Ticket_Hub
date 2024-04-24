@@ -50,7 +50,7 @@ class HomeNavigation extends StatelessWidget {
                     color: Colors.deepPurple,
                   ),
                   Icon(
-                    Icons.person,
+                    Icons.settings,
                     color: Colors.deepPurple,
                   ),
                 ],

@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_hub/view_model/state_management/profile/profile_cubit.dart';
 
 import '../../components/profile_textFormField_component.dart';
+import '../../constants.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
-
+  const ProfileScreen({Key? key, required this.userID}) : super(key: key);
+  final userID;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          ProfileCubit("77lCDGrRn0Ag8VYibouu")..fetchUserData(),
+      create: (context) => ProfileCubit(userID)..fetchUserData(),
       child: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -52,8 +52,10 @@ class ProfileScreen extends StatelessWidget {
                         'userName': profileData[1]['controller'].text,
                         'profilePicture': profileData[6]['controller'],
                       };
-                      profileCubit.updateUserData(
-                          "77lCDGrRn0Ag8VYibouu", updatedUserData);
+                      await profileCubit.updateUserData(
+                          userID, updatedUserData);
+
+                      Navigator.pop(context, 'refresh');
                     },
                     child: const Text(
                       "Save",
@@ -68,139 +70,152 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
             extendBodyBehindAppBar: true,
-            body: SafeArea(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width / 3,
-                            height: MediaQuery.of(context).size.width / 3,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image:
-                                    NetworkImage(profileData[6]['controller']),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: MediaQuery.of(context).size.width / 1000,
-                            right: MediaQuery.of(context).size.height / 200,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height / 20,
-                              width: MediaQuery.of(context).size.width / 10,
-                              decoration: const BoxDecoration(
+            body: Container(
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Statics.background()),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 3,
+                              height: MediaQuery.of(context).size.width / 3,
+                              decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: IconButton(
-                                iconSize:
-                                    MediaQuery.of(context).size.width / 18,
-                                icon: const Icon(Icons.edit),
-                                onPressed: () async {
-                                  final imageFile =
-                                      await profileCubit.pickImage(
-                                    fromCamera: false,
-                                    fromGallery: true,
-                                  );
-                                  if (imageFile != null) {
-                                    final imgUploaded = await profileCubit
-                                        .uploadToStorage(imageFile);
-                                    if (imgUploaded != null) {
-                                      profileData[6]['controller'] =
-                                          imgUploaded;
-                                    }
-                                  }
-                                },
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      profileData[6]['controller']),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                            Positioned(
+                              bottom: MediaQuery.of(context).size.width / 1000,
+                              right: MediaQuery.of(context).size.height / 200,
+                              child: Container(
+                                height: MediaQuery.of(context).size.height / 20,
+                                width: MediaQuery.of(context).size.width / 10,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: IconButton(
+                                  iconSize:
+                                      MediaQuery.of(context).size.width / 18,
+                                  icon: const Icon(Icons.edit),
+                                  onPressed: () async {
+                                    final imageFile =
+                                        await profileCubit.pickImage(
+                                      fromCamera: false,
+                                      fromGallery: true,
+                                    );
+                                    if (imageFile != null) {
+                                      final imgUploaded = await profileCubit
+                                          .uploadToStorage(imageFile);
+                                      if (imgUploaded != null) {
+                                        profileData[6]['controller'] =
+                                            imgUploaded;
+                                      }
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 400),
-                    Text(
-                      profileData[0]['controller'].text,
-                      style: const TextStyle(
-                        fontSize: 28,
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height / 400),
+                      Text(
+                        profileData[0]['controller'].text,
+                        style: const TextStyle(
+                          fontSize: 28,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 1000),
-                    Text(
-                      profileData[1]['controller'].text,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey,
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height / 1000),
+                      Text(
+                        profileData[1]['controller'].text,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 120),
-                    const Divider(
-                      color: Colors.deepPurple,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 120),
-                    CustomTextFormField(
-                      controller: profileData[0]['controller'],
-                      width: 0.9,
-                      hintText: 'Full name',
-                      label: 'Full name',
-                      paddingSymmetric: 20.0,
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 50),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CustomTextFormField(
-                            controller: profileData[4]['controller'],
-                            width: 0.43,
-                            hintText: 'Gender',
-                            label: 'Gender',
-                            paddingSymmetric: 20.0,
-                          ),
-                          CustomTextFormField(
-                            controller: profileData[5]['controller'],
-                            width: 0.43,
-                            hintText: 'Age',
-                            label: 'Age',
-                            paddingSymmetric: 20.0,
-                          ),
-                        ],
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height / 120),
+                      const Divider(
+                        color: Colors.deepPurple,
+                        indent: 20,
+                        endIndent: 20,
                       ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 50),
-                    CustomTextFormField(
-                      controller: profileData[2]['controller'],
-                      width: 0.9,
-                      hintText: 'Email',
-                      label: 'Email',
-                      paddingSymmetric: 20.0,
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 50),
-                    CustomTextFormField(
-                      controller: profileData[3]['controller'],
-                      width: 0.9,
-                      hintText: 'Phone number',
-                      label: 'Phone number',
-                      paddingSymmetric: 20.0,
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 50),
-                    CustomTextFormField(
-                      controller: profileData[1]['controller'],
-                      width: 0.9,
-                      hintText: 'User name',
-                      label: 'User name',
-                      paddingSymmetric: 20.0,
-                    ),
-                  ],
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height / 120),
+                      CustomTextFormField(
+                        controller: profileData[0]['controller'],
+                        width: 0.9,
+                        hintText: 'Full name',
+                        label: 'Full name',
+                        paddingSymmetric: 20.0,
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 50),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomTextFormField(
+                              controller: profileData[4]['controller'],
+                              width: 0.43,
+                              hintText: 'Gender',
+                              label: 'Gender',
+                              paddingSymmetric: 20.0,
+                            ),
+                            CustomTextFormField(
+                              controller: profileData[5]['controller'],
+                              width: 0.43,
+                              hintText: 'Age',
+                              label: 'Age',
+                              paddingSymmetric: 20.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 50),
+                      CustomTextFormField(
+                        controller: profileData[2]['controller'],
+                        width: 0.9,
+                        hintText: 'Email',
+                        label: 'Email',
+                        paddingSymmetric: 20.0,
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 50),
+                      CustomTextFormField(
+                        controller: profileData[3]['controller'],
+                        width: 0.9,
+                        hintText: 'Phone number',
+                        label: 'Phone number',
+                        paddingSymmetric: 20.0,
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 50),
+                      CustomTextFormField(
+                        controller: profileData[1]['controller'],
+                        width: 0.9,
+                        hintText: 'User name',
+                        label: 'User name',
+                        paddingSymmetric: 20.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

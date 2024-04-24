@@ -3,6 +3,7 @@ import 'package:ticket_hub/screens/favorites/favorites.dart';
 import 'package:ticket_hub/screens/home/home.dart';
 import 'package:ticket_hub/screens/my_tickets/my_tickets.dart';
 import 'package:ticket_hub/screens/profile/profile.dart';
+import 'package:ticket_hub/screens/settings/settings.dart';
 
 part 'navigation_state.dart';
 
@@ -22,7 +23,7 @@ class NavigationCubit extends Cubit<NavigationState> {
     const HomeScreen(),
     const MyTicketsScreen(),
     const FavoritesScreen(),
-    ProfileScreen(),
+    SettingsScreen(),
   ];
 
   void navigateBar(index) {

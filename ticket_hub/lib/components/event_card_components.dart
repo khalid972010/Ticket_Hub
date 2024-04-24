@@ -15,7 +15,7 @@ class EventCardComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 7),
+      padding: const EdgeInsets.only(left: 7, bottom: 8),
       child: Material(
         elevation: 4,
         borderRadius: BorderRadius.circular(25),
@@ -23,7 +23,7 @@ class EventCardComponent extends StatelessWidget {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return EventScreen(eventId: '1pe3HzcVlXxuG27a00nN');
+                return EventScreen(eventId: eventCard!['id']);
               },
             ));
           },

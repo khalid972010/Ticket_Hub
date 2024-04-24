@@ -32,102 +32,116 @@ class HomeScreen extends StatelessWidget {
           return Container(
             height: 1000,
             color: Colors.grey.shade200,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.40,
-                  child: Stack(
-                    children: [
-                      Image(
-                        height: MediaQuery.of(context).size.height * 0.35,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        image: AssetImage(Statics.background()),
-                      ),
-                      const Positioned(
-                        top: 120,
-                        left: 16,
-                        child: Text(
-                          'Welcome back,',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: "Poppins-T",
-                              fontWeight: FontWeight.bold),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.40,
+                    child: Stack(
+                      children: [
+                        Image(
+                          height: MediaQuery.of(context).size.height * 0.35,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          image: AssetImage(Statics.background()),
                         ),
-                      ),
-                      const Positioned(
-                        top: 150, // Adjust as needed
-                        left: 16, // Adjust as needed
-                        child: Text(
-                          'Jonathan',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
+                        const Positioned(
+                          top: 120,
+                          left: 16,
+                          child: Text(
+                            'Welcome back,',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: "Poppins-T",
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        left: 10,
-                        right: 10,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Material(
-                            elevation: 4,
-                            borderRadius: BorderRadius.circular(13.0),
-                            child: Container(
-                              height: 65,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(13.0),
-                                color: Colors.white,
-                              ),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: Row(
-                                children: [
-                                  const Expanded(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: 'Search events...',
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
+                        const Positioned(
+                          top: 150, // Adjust as needed
+                          left: 16, // Adjust as needed
+                          child: Text(
+                            'Jonathan',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          left: 10,
+                          right: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(13.0),
+                              child: Container(
+                                height: 65,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13.0),
+                                  color: Colors.white,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: Row(
+                                  children: [
+                                    const Expanded(
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          hintText: 'Search events...',
+                                          hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                          border: InputBorder.none,
                                         ),
-                                        border: InputBorder.none,
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      color: ColorsHelpers.createMaterialColor(
-                                          const Color.fromARGB(
-                                              255, 107, 96, 209)),
-                                      borderRadius: BorderRadius.circular(10),
+                                    Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        color:
+                                            ColorsHelpers.createMaterialColor(
+                                                const Color.fromARGB(
+                                                    255, 107, 96, 209)),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: const FaIcon(
+                                        size: 30,
+                                        EvaIcons.search,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                    child: const FaIcon(
-                                      size: 30,
-                                      EvaIcons.search,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const CategoryListBuilder(),
-                const SizedBox(
-                  height: 20,
-                ),
-                const EventListBuilder(),
-              ],
+                  const CategoryListBuilder(),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 24),
+                      child: const Text(
+                        "Popular Events",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const EventListBuilder(),
+                ],
+              ),
             ),
           );
         },

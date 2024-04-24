@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_hub/components/category_card_components.dart';
 import 'package:ticket_hub/models/category_card_model.dart';
-import 'package:ticket_hub/view_model/state_management/categories/cubit/categories_cubit.dart';
+import 'package:ticket_hub/view_model/state_management/categories/categories_cubit.dart';
 
 class CategoryListBuilder extends StatelessWidget {
   const CategoryListBuilder({super.key});
