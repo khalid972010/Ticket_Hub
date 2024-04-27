@@ -45,11 +45,8 @@ class ProfileScreen extends StatelessWidget {
                     onPressed: () async {
                       final updatedUserData = {
                         'fullName': profileData[0]['controller'].text,
-                        'gender': profileData[4]['controller'].text,
-                        'age': profileData[5]['controller'].text,
                         'email': profileData[2]['controller'].text,
                         'phoneNumber': profileData[3]['controller'].text,
-                        'userName': profileData[1]['controller'].text,
                         'profilePicture': profileData[6]['controller'],
                       };
                       await profileCubit.updateUserData(

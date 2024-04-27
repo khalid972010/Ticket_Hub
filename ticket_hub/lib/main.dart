@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_hub/firebase_options.dart';
 import 'package:ticket_hub/helpers/colors_helper.dart';
+import 'package:ticket_hub/screens/auth/signup/sign_up_page.dart';
 import 'package:ticket_hub/screens/home/home.dart';
 import 'package:ticket_hub/screens/event/event.dart';
 import 'package:ticket_hub/screens/home_navigation/home_navigation.dart';
 import 'package:ticket_hub/screens/loading_screen/loading.dart';
+import 'package:ticket_hub/screens/login/login_screen.dart';
 import 'package:ticket_hub/screens/on_boarding/on_boarding.dart';
 import 'package:ticket_hub/screens/settings/settings.dart';
+import 'package:ticket_hub/screens/welcome/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ticket_hub/screens/home_navigation/home_navigation.dart';
 
 import '../../themes/app_theme.dart';
 
@@ -23,15 +26,13 @@ class _SignInFourState extends State<SignInFour> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     //mediaquer->dimensions
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColorLight.gridSelectedColor,
+      backgroundColor: Colors.deepPurple,
       body: SafeArea(
         child: Column(
           children: [
@@ -42,7 +43,7 @@ class _SignInFourState extends State<SignInFour> {
 
             //page content
             Expanded(
-              flex: 11,
+              flex: 6,
               child: buildCard(size),
             ),
           ],
@@ -60,172 +61,142 @@ class _SignInFourState extends State<SignInFour> {
         color: Colors.white,
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //build minimize icon
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                width: 35,
-                height: 4.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.grey,
+        padding: const EdgeInsets.only(left: 20.0, right: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //build minimize icon
+
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+
+              //welcome text
+              Text(
+                'Welcome Back!',
+                style: GoogleFonts.inter(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-            ),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-
-            //welcome text
-            Text(
-              'Welcome Back!',
-              style: GoogleFonts.inter(
-                fontSize: 22.0,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
+              SizedBox(
+                height: size.height * 0.01,
               ),
-            ),
-            SizedBox(
-              height: size.height * 0.01,
-            ),
-            Text(
-              'Let’s login for explore continues',
-              style: GoogleFonts.inter(
-                fontSize: 14.0,
-                color: const Color(0xFF969AA8),
+              Text(
+                'Let’s login for explore continues',
+                style: GoogleFonts.inter(
+                  fontSize: 14.0,
+                  color: const Color(0xFF969AA8),
+                ),
               ),
-            ),
-            SizedBox(
-              height: size.height * 0.03,
-            ),
-
-            //logo section
-            logo(size.height / 12, size.height / 12),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            richText(24),
-            SizedBox(
-              height: size.height * 0.03,
-            ),
-
-            //email textField
-            Text(
-              'Please enter your email',
-              style: GoogleFonts.inter(
-                fontSize: 14.0,
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
+              SizedBox(
+                height: size.height * 0.03,
               ),
-            ),
-            SizedBox(
-              height: size.height * 0.01,
-            ),
-            Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  emailTextField(size),
-                  SizedBox(
-                    height: size.height * 0.02,
+
+              //logo section
+              logo(size.height / 8, size.height / 8),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+
+              //email textField
+              Container(
+                margin: const EdgeInsets.only(left: 3),
+                child: Text(
+                  'Email Address',
+                  style: GoogleFonts.inter(
+                    fontSize: 14.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
-                  //password textField
-                  Text(
-                    'Password',
-                    style: GoogleFonts.inter(
-                      fontSize: 14.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    emailTextField(size),
+                    SizedBox(
+                      height: size.height * 0.02,
                     ),
+                    //password textField
+                    Container(
+                      margin: const EdgeInsets.only(left: 3),
+                      child: Text(
+                        'Password',
+                        style: GoogleFonts.inter(
+                          fontSize: 14.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              passwordTextField(size),
+              SizedBox(
+                height: size.height * 0.04,
+              ),
+
+              //sign in button
+              signInButton(size),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+
+              //we can connect text
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Expanded(child: Divider()),
+                  const SizedBox(
+                    width: 16,
                   ),
+                  Text(
+                    'We can Connect with',
+                    style: GoogleFonts.inter(
+                      fontSize: 12.0,
+                      color: const Color(0xFF969AA8),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  const Expanded(child: Divider()),
                 ],
               ),
-            ),
 
-            SizedBox(
-              height: size.height * 0.01,
-            ),
-            passwordTextField(size),
-            SizedBox(
-              height: size.height * 0.03,
-            ),
-
-            //sign in button
-            signInButton(size),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-
-            //we can connect text
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Expanded(child: Divider()),
-                const SizedBox(
-                  width: 16,
-                ),
-                Text(
-                  'We can Connect with',
-                  style: GoogleFonts.inter(
-                    fontSize: 12.0,
-                    color: const Color(0xFF969AA8),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  width: 16,
-                ),
-                const Expanded(child: Divider()),
-              ],
-            ),
-
-            //footer section
-            buildFooter(size),
-          ],
+              //footer section
+              buildFooter(size),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget logo(double height_, double width_) {
-    return SvgPicture.asset(
-      'assets/logo.svg',
+    return Image.asset(
+      'assets/images/animation.gif',
       height: height_,
       width: width_,
-    );
-  }
-
-  Widget richText(double fontSize) {
-    return Text.rich(
-      TextSpan(
-        style: GoogleFonts.inter(
-          fontSize: fontSize,
-          color: const Color(0xFF21899C),
-          letterSpacing: 2.000000061035156,
-        ),
-        children: const [
-          TextSpan(
-            text: 'LOGIN',
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          TextSpan(
-            text: 'PAGE',
-            style: TextStyle(
-              color: Color(0xFFFE9879),
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -266,7 +237,7 @@ class _SignInFourState extends State<SignInFour> {
           prefixIcon: Icon(
             Icons.mail_outline_rounded,
             color: emailController.text.isEmpty
-                ? const Color(0xFF151624).withOpacity(0.5)
+                ? const Color(0xFF151624).withOpacity(1)
                 : const Color.fromRGBO(44, 185, 176, 1),
             size: 16,
           ),
@@ -370,7 +341,7 @@ class _SignInFourState extends State<SignInFour> {
           }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Please fill in all fields")),
+            const SnackBar(content: Text("Please fill in all fields")),
           );
         }
         setState(() {
@@ -382,7 +353,7 @@ class _SignInFourState extends State<SignInFour> {
         height: size.height / 13,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: const Color(0xFF21899C),
+          color: Colors.deepPurple,
           boxShadow: [
             BoxShadow(
               color: const Color(0xFF4C2E84).withOpacity(0.2),
@@ -431,14 +402,14 @@ class _SignInFourState extends State<SignInFour> {
                       // userCredential.additionalUserInfo.;
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                             content:
                                 Text("Signed in with Google successfully!")),
                       );
                     } catch (e) {
                       print("Failed to sign in with Google: $e");
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                             content: Text("Failed to sign in with Google")),
                       );
                     }
@@ -477,15 +448,17 @@ class _SignInFourState extends State<SignInFour> {
                 TextSpan(
                   text: 'Don’t have an account? ',
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
+                    fontSize: 16.0,
+                    fontFamily: 'Poppins-M',
                   ),
                 ),
                 TextSpan(
                   text: 'Sign Up here',
                   style: TextStyle(
-                    color: Color(0xFFFF7248),
-                    fontWeight: FontWeight.w500,
-                  ),
+                      fontSize: 16.0,
+                      color: Colors.deepPurple,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Poppins-M'),
                 ),
               ],
             ),
@@ -507,20 +480,23 @@ Future<void> loginUser(
     );
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("User logged in successfully")),
+      const SnackBar(content: Text("User logged in successfully")),
     );
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const HomeNavigation()));
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("No user found for that email.")),
+        const SnackBar(content: Text("No user found for that email.")),
       );
     } else if (e.code == 'wrong-password') {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Wrong password provided for that user.")),
+        const SnackBar(content: Text("Wrong password provided for that user.")),
       );
     } else if (e.code == 'invalid-credential') {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Wrong password provided for that user.")),
+        const SnackBar(content: Text("Wrong password provided for that user.")),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -530,7 +506,7 @@ Future<void> loginUser(
   } catch (e) {
     print('Failed to sign in: $e');
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("An error occurred while signing in")),
+      const SnackBar(content: Text("An error occurred while signing in")),
     );
   }
 }

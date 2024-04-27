@@ -26,9 +26,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final ImagePicker picker = ImagePicker();
   File? pickedImage;
-  String ImageUrl =
+  String imageURL =
       'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
@@ -100,6 +99,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                             fromCamera: false,
                                             fromGallery: true,
                                           );
+
                                           if (imageFile != null) {
                                             final imgUploaded =
                                                 await signUpCubit
@@ -107,6 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                             if (imgUploaded != null) {
                                               signUpCubit.pickedImage =
                                                   imgUploaded;
+                                              imageURL = imgUploaded;
                                             }
                                           }
                                         },
@@ -358,63 +359,64 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-}
 
-Future<void> registerUser(BuildContext context, String email, String password,
-    String name, String phoneNumber) async {
-  try {
-    var auth = FirebaseAuth.instance;
-    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+  Future<void> registerUser(BuildContext context, String email, String password,
+      String name, String phoneNumber) async {
+    try {
+      var auth = FirebaseAuth.instance;
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    // Check if the phone number is already in use
-    QuerySnapshot phoneQuery = await FirebaseFirestore.instance
-        .collection('users')
-        .where('phoneNumber', isEqualTo: phoneNumber)
-        .get();
+      // Check if the phone number is already in use
+      QuerySnapshot phoneQuery = await FirebaseFirestore.instance
+          .collection('users')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .get();
 
-    if (phoneQuery.docs.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('The phone number is already in use.'),
-        ),
-      );
-      return;
-    }
-    // Save additional user information to Firestore
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userCredential.user!.uid)
-        .set({
-      'email': email,
-      'name': name,
-      'phoneNumber': phoneNumber,
-    });
+      if (phoneQuery.docs.isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('The phone number is already in use.'),
+          ),
+        );
+        return;
+      }
+      // Save additional user information to Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'email': email,
+        'name': name,
+        'phoneNumber': phoneNumber,
+        'profilePicture': imageURL,
+      });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("User registered successfully")),
-    );
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'email-already-in-use') {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('The account already exists for that email.'),
-        ),
+        const SnackBar(content: Text("User registered successfully")),
       );
-    } else if (e.code == 'weak-password') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Weak Password'),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to create user: $e'),
-        ),
-      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('The account already exists for that email.'),
+          ),
+        );
+      } else if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Weak Password'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to create user: $e'),
+          ),
+        );
+      }
     }
   }
 }

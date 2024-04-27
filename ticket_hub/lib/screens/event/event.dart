@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticket_hub/helpers/category_to_icon.dart';
@@ -41,21 +44,21 @@ class EventScreen extends StatelessWidget {
               leading: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Container(
-                  margin: EdgeInsets.only(top: 12),
+                  margin: const EdgeInsets.only(top: 12),
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2),
                         spreadRadius: 2,
                         blurRadius: 5,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                     shape: BoxShape.circle,
                     color: Colors.white,
                   ),
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.black,
                       size: 30,
@@ -70,7 +73,7 @@ class EventScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       top: 12,
                       right: 12,
                     ),
@@ -80,20 +83,20 @@ class EventScreen extends StatelessWidget {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 2,
                           blurRadius: 5,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       shape: BoxShape.circle,
                       color: Colors.white,
                     ),
                     child: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.bookmark_outline,
                         color: Colors.black,
                         size: 30,
                       ),
                       onPressed: () {
-                        // Handle bookmark button press
+                        addToFavourites(context);
                       },
                     ),
                   ),
@@ -101,7 +104,7 @@ class EventScreen extends StatelessWidget {
               ],
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   SizedBox(
@@ -133,7 +136,7 @@ class EventScreen extends StatelessWidget {
                                         .withOpacity(0.5), // Shadow color
                                     spreadRadius: 5, // Spread radius
                                     blurRadius: 7, // Blur radius
-                                    offset: Offset(0,
+                                    offset: const Offset(0,
                                         3), // Offset in x and y axes from the center
                                   ),
                                 ],
@@ -141,7 +144,7 @@ class EventScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(25),
                                 color: Colors.white,
                               ),
-                              padding: EdgeInsets.symmetric(vertical: 12),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -159,13 +162,13 @@ class EventScreen extends StatelessWidget {
                                           children: [
                                             Text(
                                               eventData["title"],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 20),
                                             ),
                                             Text(
                                               eventData["owner"],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.grey),
                                             ),
@@ -176,7 +179,7 @@ class EventScreen extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(15),
                                             shape: BoxShape.rectangle,
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 255, 107, 97, 201),
                                           ),
                                           child: IconButton(
@@ -193,17 +196,19 @@ class EventScreen extends StatelessWidget {
                                     ),
                                   ),
                                   //Buttons
-                                  SizedBox(height: 30),
+                                  const SizedBox(height: 30),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          addToFavourites(context);
+                                        },
                                         style: ButtonStyle(
                                           padding: MaterialStateProperty.all<
                                               EdgeInsetsGeometry>(
-                                            EdgeInsets.symmetric(
+                                            const EdgeInsets.symmetric(
                                                 vertical: 12.0,
                                                 horizontal: 24.0),
                                           ),
@@ -213,12 +218,13 @@ class EventScreen extends StatelessWidget {
                                           ),
                                           foregroundColor:
                                               MaterialStateProperty.all<Color>(
-                                            Color.fromARGB(255, 107, 97, 201),
+                                            const Color.fromARGB(
+                                                255, 107, 97, 201),
                                           ),
                                           shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
-                                              side: BorderSide(
+                                              side: const BorderSide(
                                                 color: Color.fromARGB(
                                                     255, 107, 97, 201),
                                               ),
@@ -227,7 +233,7 @@ class EventScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        child: Text(
+                                        child: const Text(
                                           "I'm Interested",
                                           style: TextStyle(
                                             fontSize: 16.0,
@@ -236,17 +242,21 @@ class EventScreen extends StatelessWidget {
                                         ),
                                       ),
                                       ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          buyTicket(
+                                              context, eventData["price"]);
+                                        },
                                         style: ButtonStyle(
                                           padding: MaterialStateProperty.all<
                                               EdgeInsetsGeometry>(
-                                            EdgeInsets.symmetric(
+                                            const EdgeInsets.symmetric(
                                                 vertical: 12.0,
                                                 horizontal: 24.0),
                                           ),
                                           backgroundColor:
                                               MaterialStateProperty.all<Color>(
-                                            Color.fromARGB(255, 107, 97, 201),
+                                            const Color.fromARGB(
+                                                255, 107, 97, 201),
                                           ),
                                           shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
@@ -258,7 +268,7 @@ class EventScreen extends StatelessWidget {
                                         ),
                                         child: Text(
                                           "Buy - ${eventData["price"]}\$",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 16.0,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -268,7 +278,7 @@ class EventScreen extends StatelessWidget {
                                     ],
                                   ),
                                   //Time and date
-                                  SizedBox(height: 30),
+                                  const SizedBox(height: 30),
                                   // Location
                                   Row(
                                     mainAxisAlignment:
@@ -278,18 +288,20 @@ class EventScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
-                                          color: Color(0xFFF3F0FE),
+                                          color: const Color(0xFFF3F0FE),
                                         ),
                                         child: CircleAvatar(
                                           backgroundColor: Colors.transparent,
                                           radius:
                                               24, // Adjust the radius to change the size of the CircleAvatar
-                                          child: Icon(
-                                            Icons.access_time,
-                                            color: Color.fromARGB(
-                                                255, 107, 97, 201),
-                                            size:
-                                                24, // Adjust the size of the icon to make it smaller
+                                          child: Container(
+                                            child: Icon(
+                                              Icons.access_time,
+                                              color: Color.fromARGB(
+                                                  255, 107, 97, 201),
+                                              size:
+                                                  24, // Adjust the size of the icon to make it smaller
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -299,14 +311,14 @@ class EventScreen extends StatelessWidget {
                                         children: [
                                           Text(
                                             eventData["date"],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.grey,
                                               fontSize: 15,
                                             ),
                                           ),
                                           Text(
                                             eventData["time"],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -316,28 +328,28 @@ class EventScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           border: Border.all(
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 255, 209, 209, 209),
                                             width: 2.0,
                                           ),
                                         ),
-                                        child: CircleAvatar(
+                                        child: const CircleAvatar(
                                           backgroundColor: Colors.white,
                                           radius: 24,
+                                          foregroundColor:
+                                              Color.fromARGB(255, 107, 97, 201),
                                           child: FaIcon(
                                             EvaIcons.calendarOutline,
                                             color: Color.fromARGB(
                                                 255, 107, 97, 201),
                                             size: 25,
                                           ),
-                                          foregroundColor:
-                                              Color.fromARGB(255, 107, 97, 201),
                                         ),
                                       ),
                                     ],
                                   ),
 
-                                  SizedBox(height: 16),
+                                  const SizedBox(height: 16),
                                   //Location
                                   // Location
                                   Row(
@@ -348,9 +360,9 @@ class EventScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
-                                          color: Color(0xFFF3F0FE),
+                                          color: const Color(0xFFF3F0FE),
                                         ),
-                                        child: CircleAvatar(
+                                        child: const CircleAvatar(
                                           backgroundColor: Colors.transparent,
                                           radius:
                                               24, // Adjust the radius to change the size of the CircleAvatar
@@ -369,14 +381,14 @@ class EventScreen extends StatelessWidget {
                                         children: [
                                           Text(
                                             eventData["address"],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.grey,
                                               fontSize: 15,
                                             ),
                                           ),
                                           Text(
                                             eventData["location"],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -392,25 +404,25 @@ class EventScreen extends StatelessWidget {
                                             width: 2.0,
                                           ),
                                         ),
-                                        child: CircleAvatar(
+                                        child: const CircleAvatar(
                                           backgroundColor: Colors.white,
                                           radius: 24,
+                                          foregroundColor:
+                                              Color.fromARGB(255, 107, 97, 201),
                                           child: FaIcon(
                                             EvaIcons.navigation2Outline,
                                             color: Color.fromARGB(
                                                 255, 107, 97, 201),
                                             size: 25,
                                           ),
-                                          foregroundColor:
-                                              Color.fromARGB(255, 107, 97, 201),
                                         ),
                                       ),
                                     ],
                                   ),
                                   //Place
-                                  SizedBox(height: 16),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 25.0),
+                                  const SizedBox(height: 16),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 25.0),
                                     child: Align(
                                       alignment:
                                           AlignmentDirectional.centerStart,
@@ -427,13 +439,13 @@ class EventScreen extends StatelessWidget {
                                       //await launch("https://www.google.com");
                                     },
                                     child: Container(
-                                      margin: EdgeInsets.only(top: 20),
+                                      margin: const EdgeInsets.only(top: 20),
                                       width: 350,
                                       height: 320,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                             20), // Adjust the radius as needed
-                                        image: DecorationImage(
+                                        image: const DecorationImage(
                                           image: AssetImage(
                                               "assets/images/map.JPG"),
                                           fit: BoxFit.cover,
@@ -455,6 +467,34 @@ class EventScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  void addToFavourites(BuildContext context) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    String newFavoriteId = eventId; // replace with your actual ID
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    await users.doc(user?.uid).set({
+      'favorites': FieldValue.arrayUnion([newFavoriteId])
+    }, SetOptions(merge: true));
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Favorite added successfully")),
+    );
+  }
+
+  void buyTicket(BuildContext context, eventData) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    String newFavoriteId = eventId;
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    await users.doc(user?.uid).set({
+      'boughtTickets': FieldValue.arrayUnion([newFavoriteId])
+    }, SetOptions(merge: true));
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Ticket bought successfully")),
     );
   }
 }

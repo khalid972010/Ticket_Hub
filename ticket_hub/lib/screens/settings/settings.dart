@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_hub/screens/profile/profile.dart';
@@ -10,7 +11,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          ProfileCubit("77lCDGrRn0Ag8VYibouu")..fetchUserData(),
+          ProfileCubit("${FirebaseAuth.instance.currentUser?.uid}")
+            ..fetchUserData(),
       child: SafeArea(
         child: Padding(
           padding:
@@ -39,7 +41,7 @@ class SettingsScreen extends StatelessWidget {
                           profileData[0]['controller'].text,
                           style: TextStyle(
                               fontSize: 28,
-                              color: Colors.white.withOpacity(0.9)),
+                              color: Colors.black.withOpacity(0.9)),
                         ),
                       ],
                     ),
@@ -53,7 +55,8 @@ class SettingsScreen extends StatelessWidget {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return ProfileScreen(
-                                  userID: "77lCDGrRn0Ag8VYibouu",
+                                  userID:
+                                      "${FirebaseAuth.instance.currentUser?.uid}",
                                 );
                               },
                             )).then((value) {
@@ -64,21 +67,22 @@ class SettingsScreen extends StatelessWidget {
                           },
                           padding: EdgeInsetsDirectional.zero,
                           highlightColor: Colors.transparent,
-                          child: const ListTile(
-                            leading: Icon(
+                          child: ListTile(
+                            leading: const Icon(
                               Icons.person_outline,
                               size: 30,
                               color: Colors.deepPurple,
                             ),
                             title: Text(
                               "Edit Profile",
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black.withOpacity(0.9)),
                             ),
                             trailing: Icon(
                               Icons.chevron_right,
                               size: 40,
-                              color: Colors.white,
+                              color: Colors.black.withOpacity(0.9),
                             ),
                           ),
                         ),
@@ -96,13 +100,10 @@ class SettingsScreen extends StatelessWidget {
                               "Contact Us",
                               style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.white.withOpacity(0.9)),
+                                  color: Colors.black.withOpacity(0.9)),
                             ),
-                            trailing: const Icon(
-                              Icons.chevron_right,
-                              size: 40,
-                              color: Colors.white,
-                            ),
+                            trailing: Icon(Icons.chevron_right,
+                                size: 40, color: Colors.black.withOpacity(0.9)),
                           ),
                         ),
                         MaterialButton(
@@ -119,12 +120,12 @@ class SettingsScreen extends StatelessWidget {
                               "Dark Mode",
                               style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.white.withOpacity(0.9)),
+                                  color: Colors.black.withOpacity(0.9)),
                             ),
-                            trailing: const Icon(
+                            trailing: Icon(
                               Icons.chevron_right,
                               size: 40,
-                              color: Colors.white,
+                              color: Colors.black.withOpacity(0.9),
                             ),
                           ),
                         ),
@@ -142,12 +143,12 @@ class SettingsScreen extends StatelessWidget {
                               "Change Password",
                               style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.white.withOpacity(0.9)),
+                                  color: Colors.black.withOpacity(0.9)),
                             ),
-                            trailing: const Icon(
+                            trailing: Icon(
                               Icons.chevron_right,
                               size: 40,
-                              color: Colors.white,
+                              color: Colors.black.withOpacity(0.9),
                             ),
                           ),
                         ),
@@ -165,12 +166,12 @@ class SettingsScreen extends StatelessWidget {
                               "Privacy Policy",
                               style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.white.withOpacity(0.9)),
+                                  color: Colors.black.withOpacity(0.9)),
                             ),
-                            trailing: const Icon(
+                            trailing: Icon(
                               Icons.chevron_right,
                               size: 40,
-                              color: Colors.white,
+                              color: Colors.black.withOpacity(0.9),
                             ),
                           ),
                         ),
@@ -188,12 +189,12 @@ class SettingsScreen extends StatelessWidget {
                               "Log Out",
                               style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.white.withOpacity(0.9)),
+                                  color: Colors.black.withOpacity(0.9)),
                             ),
-                            trailing: const Icon(
+                            trailing: Icon(
                               Icons.chevron_right,
                               size: 40,
-                              color: Colors.white,
+                              color: Colors.black.withOpacity(0.9),
                             ),
                           ),
                         ),

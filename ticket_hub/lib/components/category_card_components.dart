@@ -35,49 +35,46 @@ class categoryCardComponent extends StatelessWidget {
                 categoriesCubit.selectCategory(index);
                 isCardSelected = !isCardSelected;
               },
-              child: Container(
-                child: Card(
-                  // Customize card appearance here
-                  color: isCardSelected
-                      ? Color.fromARGB(255, 107, 97, 201)
-                      : Colors.white,
-                  elevation: 2, // Add elevation for a shadow effect
-                  margin: const EdgeInsets.only(
-                    left: 15,
-                    top: 25,
-                    bottom: 25,
+              child: Card(
+                // Customize card appearance here
+                color: isCardSelected
+                    ? Color.fromARGB(255, 107, 97, 201)
+                    : Colors.white,
+                elevation: 2, // Add elevation for a shadow effect
+                margin: const EdgeInsets.only(
+                  left: 15,
+                  top: 25,
+                  bottom: 25,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50), // Set border radius
+                  side: const BorderSide(
+                    color:
+                        Color.fromARGB(255, 252, 252, 252), // Set border color
+                    width: 0, // Set border width
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(50), // Set border radius
-                    side: const BorderSide(
-                      color: Color.fromARGB(
-                          255, 252, 252, 252), // Set border color
-                      width: 0, // Set border width
-                    ),
-                  ),
-                  child: Container(
-                    width: 120,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          categoryModel.categoryIcon,
+                ),
+                child: Container(
+                  width: 120,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        categoryModel.categoryIcon,
+                        color: !isCardSelected
+                            ? Color.fromARGB(255, 107, 97, 201)
+                            : Colors.white,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        categoryModel.categoryName,
+                        style: TextStyle(
                           color: !isCardSelected
                               ? Color.fromARGB(255, 107, 97, 201)
                               : Colors.white,
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          categoryModel.categoryName,
-                          style: TextStyle(
-                            color: !isCardSelected
-                                ? Color.fromARGB(255, 107, 97, 201)
-                                : Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

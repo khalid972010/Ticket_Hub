@@ -74,8 +74,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void initializeAll() {
-    profileData[0]['controller'] =
-        TextEditingController(text: user!['fullName']);
+    profileData[0]['controller'] = TextEditingController(text: user!['name']);
     profileData[1]['controller'] =
         TextEditingController(text: user!['userName']);
     profileData[2]['controller'] = TextEditingController(text: user!['email']);
@@ -130,5 +129,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     } on Exception catch (exception) {
       print('Failed to pick image: $exception');
     }
+    return null;
   }
 }
